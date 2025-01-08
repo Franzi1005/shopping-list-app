@@ -1,0 +1,18 @@
+.ShoppingItem {
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttons {
+  text-align: right;
+}
+button {
+  margin: 4px;
+}
+
+.singleShoppingItem {
+  text-align: left;
+}
+.itemAmount {
+  margin-left: 5px;
+}

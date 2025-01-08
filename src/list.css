@@ -1,0 +1,15 @@
+ul {
+  list-style-type: none;
+  padding-inline-start: 0;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.list,
+h1 {
+  padding: 20px 100px;
+  text-align: center;
+}
+.amount {
+  width: 40px;
+}
