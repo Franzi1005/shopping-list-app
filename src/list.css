@@ -5,11 +5,17 @@ ul {
   margin: 0 auto;
 }
 
-.list,
-h1 {
-  padding: 20px 100px;
+.list {
+  padding: 16px 60px 30px;
   text-align: center;
+  margin: 10px 50px;
+  background-color: rgba(255, 255, 255, 0.75);
+  border-radius: 10px;
 }
 .amount {
   width: 40px;
+}
+
+.inputSection {
+  margin-bottom: 16px;
 }

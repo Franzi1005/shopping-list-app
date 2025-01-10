@@ -16,3 +16,8 @@ button {
 .itemAmount {
   margin-left: 5px;
 }
+
+.amount {
+  width: 40px;
+  margin-left: 5px;
+}

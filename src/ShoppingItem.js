@@ -3,7 +3,10 @@ import axios from 'axios'
 import './shoppingItem.css'
 
 export default function ShoppingItem(props) {
-  let [updatedShoppingItem, setUpdatedShoppingItem] = useState(props.name)
+  let [updatedShoppingItem, setUpdatedShoppingItem] = useState({
+    name: props.name,
+    amount: props.amount,
+  })
 
   function deleteShoppingItem() {
     let apiUrl = `http://localhost:5000/api/shoppingItems/${props.id}`
@@ -13,13 +16,20 @@ export default function ShoppingItem(props) {
   function updateShoppingItem() {
     let apiUrl = `http://localhost:5000/api/shoppingItems/${props.id}`
     axios
-      .put(apiUrl, { id: props.id, name: updatedShoppingItem })
+      .put(apiUrl, {
+        id: props.id,
+        name: updatedShoppingItem.name,
+        amount: updatedShoppingItem.amount,
+      })
       .then(() => props.setToEditMode(null))
       .then(() => props.getShoppingItems()) // note for myself ()=> is needed to kind of delay the call, without htey are invoked immediately
   }
 
   function handleItemChange(event) {
-    setUpdatedShoppingItem(event.target.value)
+    setUpdatedShoppingItem({
+      ...updatedShoppingItem,
+      [event.target.name]: event.target.value,
+    })
   }
 
   function handleEditClick() {
@@ -33,8 +43,16 @@ export default function ShoppingItem(props) {
           <input type="checkbox" />
           <input
             type="text"
-            value={updatedShoppingItem}
+            value={updatedShoppingItem.name}
             onChange={handleItemChange}
+            name="name"
+          ></input>
+          <input
+            type="number"
+            className="amount"
+            value={updatedShoppingItem.amount}
+            onChange={handleItemChange}
+            name="amount"
           ></input>
         </div>
         <div className="buttons">
@@ -53,7 +71,7 @@ export default function ShoppingItem(props) {
         <div className="singleShoppingItem">
           <input type="checkbox" />
           <span contentEditable="false">{props.name}</span>
-          <span className="itemAmount">x 4</span>
+          <span className="itemAmount">x {props.amount}</span>
         </div>
         <div className="buttons">
           <button onClick={deleteShoppingItem}>
