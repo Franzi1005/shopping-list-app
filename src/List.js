@@ -45,41 +45,43 @@ export default function List(props) {
   }
 
   return (
-    <div className="list">
-      <h1>Shopping list🦆</h1>
-      <div className="inputSection">
-        <input
-          placeholder="Enter shopping item..."
-          value={newShoppingItem.name}
-          onChange={handleChange}
-          name="name"
-        ></input>
-        <input
-          type="number"
-          className="amount"
-          min="1"
-          value={newShoppingItem.amount}
-          onChange={handleChange}
-          name="amount"
-        ></input>
-        <button type="submit" onClick={handleSubmit}>
-          Add
-        </button>
+    <div className="listWrapper">
+      <div className="list">
+        <h1>Shopping list🦆</h1>
+        <div className="inputSection">
+          <input
+            placeholder="Enter shopping item..."
+            value={newShoppingItem.name}
+            onChange={handleChange}
+            name="name"
+          ></input>
+          <input
+            type="number"
+            className="amount"
+            min="1"
+            value={newShoppingItem.amount}
+            onChange={handleChange}
+            name="amount"
+          ></input>
+          <button type="submit" onClick={handleSubmit}>
+            Add
+          </button>
+        </div>
+        <ul>
+          {items.map((item) => (
+            <li key={item.id}>
+              <ShoppingItem
+                name={item.name}
+                id={item.id}
+                amount={item.amount}
+                setToEditMode={setToEditMode}
+                editableId={editableId}
+                getShoppingItems={getShoppingItems}
+              />
+            </li>
+          ))}
+        </ul>
       </div>
-      <ul>
-        {items.map((item) => (
-          <li key={item.id}>
-            <ShoppingItem
-              name={item.name}
-              id={item.id}
-              amount={item.amount}
-              setToEditMode={setToEditMode}
-              editableId={editableId}
-              getShoppingItems={getShoppingItems}
-            />
-          </li>
-        ))}
-      </ul>
     </div>
   )
 }

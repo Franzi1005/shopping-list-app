@@ -3,9 +3,12 @@ import axios from 'axios'
 import './shoppingItem.css'
 
 export default function ShoppingItem(props) {
+  let [isChecked, setIsChecked] = useState(false)
+  // let [selectedItems, setSelectedItems] = useState([])
   let [updatedShoppingItem, setUpdatedShoppingItem] = useState({
     name: props.name,
     amount: props.amount,
+    bought: isChecked,
   })
 
   function deleteShoppingItem() {
@@ -20,6 +23,7 @@ export default function ShoppingItem(props) {
         id: props.id,
         name: updatedShoppingItem.name,
         amount: updatedShoppingItem.amount,
+        bought: isChecked,
       })
       .then(() => props.setToEditMode(null))
       .then(() => props.getShoppingItems()) // note for myself ()=> is needed to kind of delay the call, without htey are invoked immediately
@@ -36,11 +40,18 @@ export default function ShoppingItem(props) {
     props.setToEditMode(props.id)
   }
 
+  function handleCheck(event) {
+    setIsChecked(event.target.checked)
+    setUpdatedShoppingItem({
+      ...updatedShoppingItem,
+      bought: event.target.checked,
+    })
+  }
+
   if (props.id === props.editableId) {
     return (
       <div className="ShoppingItem">
         <div className="singleShoppingItem">
-          <input type="checkbox" />
           <input
             type="text"
             value={updatedShoppingItem.name}
@@ -69,9 +80,30 @@ export default function ShoppingItem(props) {
     return (
       <div className="ShoppingItem">
         <div className="singleShoppingItem">
-          <input type="checkbox" />
-          <span contentEditable="false">{props.name}</span>
-          <span className="itemAmount">x {props.amount}</span>
+          <input
+            type="checkbox"
+            name="checkbox"
+            value={props.id}
+            id={props.id}
+            checked={isChecked}
+            onChange={handleCheck}
+          />
+          <span
+            contentEditable="false"
+            style={{
+              textDecoration: isChecked ? 'line-through' : 'none',
+            }}
+          >
+            {props.name}
+          </span>
+          <span
+            className="itemAmount"
+            style={{
+              textDecoration: isChecked ? 'line-through' : 'none',
+            }}
+          >
+            x {props.amount}
+          </span>
         </div>
         <div className="buttons">
           <button onClick={deleteShoppingItem}>

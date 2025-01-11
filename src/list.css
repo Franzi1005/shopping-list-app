@@ -5,12 +5,25 @@ ul {
   margin: 0 auto;
 }
 
+.listWrapper {
+  background-image: url('/src/pictures/pexels-taryn-elliott-3889695.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  max-width: 800px;
+  min-height: 800px;
+  display: block;
+  margin: 0 auto;
+  padding-top: 14px;
+}
+
 .list {
-  padding: 16px 60px 30px;
+  padding: 12px 60px 30px;
   text-align: center;
   margin: 10px 50px;
   background-color: rgba(255, 255, 255, 0.75);
-  border-radius: 10px;
+  border-radius: 8px;
+  max-width: 700px;
+  display: block;
 }
 .amount {
   width: 40px;
@@ -18,4 +31,16 @@ ul {
 
 .inputSection {
   margin-bottom: 16px;
+}
+
+@media (max-width: 900px) {
+  .list {
+    padding: 12px 18px 30px;
+    text-align: center;
+    margin: 10px 20px;
+    background-color: rgba(255, 255, 255, 0.75);
+    border-radius: 8px;
+    max-width: 700px;
+    display: block;
+  }
 }
