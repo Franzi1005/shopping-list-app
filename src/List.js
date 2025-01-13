@@ -72,7 +72,7 @@ export default function List(props) {
             <li key={item.id}>
               <ShoppingItem
                 name={item.name}
-                id={item.id}
+                id={item.item_id}
                 amount={item.amount}
                 setToEditMode={setToEditMode}
                 editableId={editableId}

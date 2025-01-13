@@ -20,7 +20,7 @@ export default function ShoppingItem(props) {
     let apiUrl = `http://localhost:5000/api/shoppingItems/${props.id}`
     axios
       .put(apiUrl, {
-        id: props.id,
+        item_id: props.id,
         name: updatedShoppingItem.name,
         amount: updatedShoppingItem.amount,
         bought: isChecked,
