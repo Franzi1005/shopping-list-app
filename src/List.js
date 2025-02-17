@@ -7,7 +7,7 @@ export default function List(props) {
   let [items, setItems] = useState([])
   let [newShoppingItem, setNewShoppingItem] = useState({
     name: '',
-    amount: '0',
+    amount: '1',
   })
   let [editableId, setEditableID] = useState('')
 
@@ -34,6 +34,9 @@ export default function List(props) {
   }, [])
 
   function handleChange(event) {
+    if (event.target.value < 1) {
+      alert('Quantity should be at least 1!')
+    }
     setNewShoppingItem({
       ...newShoppingItem,
       [event.target.name]: event.target.value,
@@ -74,6 +77,7 @@ export default function List(props) {
                 name={item.name}
                 id={item.item_id}
                 amount={item.amount}
+                bought={item.bought}
                 setToEditMode={setToEditMode}
                 editableId={editableId}
                 getShoppingItems={getShoppingItems}

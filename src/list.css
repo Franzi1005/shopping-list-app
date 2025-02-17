@@ -3,6 +3,8 @@ ul {
   padding-inline-start: 0;
   max-width: 500px;
   margin: 0 auto;
+  height: 580px;
+  overflow: auto;
 }
 
 .listWrapper {

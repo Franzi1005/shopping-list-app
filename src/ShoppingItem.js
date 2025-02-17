@@ -1,10 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import './shoppingItem.css'
 
 export default function ShoppingItem(props) {
-  let [isChecked, setIsChecked] = useState(false)
-  // let [selectedItems, setSelectedItems] = useState([])
+  let [isChecked, setIsChecked] = useState(props.bought)
   let [updatedShoppingItem, setUpdatedShoppingItem] = useState({
     name: props.name,
     amount: props.amount,
@@ -23,13 +22,16 @@ export default function ShoppingItem(props) {
         item_id: props.id,
         name: updatedShoppingItem.name,
         amount: updatedShoppingItem.amount,
-        bought: isChecked,
+        bought: updatedShoppingItem.bought,
       })
       .then(() => props.setToEditMode(null))
       .then(() => props.getShoppingItems()) // note for myself ()=> is needed to kind of delay the call, without htey are invoked immediately
   }
 
   function handleItemChange(event) {
+    if (event.target.value < 1) {
+      alert('Please enter amount')
+    }
     setUpdatedShoppingItem({
       ...updatedShoppingItem,
       [event.target.name]: event.target.value,
@@ -40,12 +42,26 @@ export default function ShoppingItem(props) {
     props.setToEditMode(props.id)
   }
 
-  function handleCheck(event) {
-    setIsChecked(event.target.checked)
-    setUpdatedShoppingItem({
-      ...updatedShoppingItem,
-      bought: event.target.checked,
-    })
+  async function handleCheck(event) {
+    const check = event.target.checked
+    setIsChecked(check)
+    setUpdatedShoppingItem((prevItem) => ({
+      ...prevItem,
+      bought: check,
+    }))
+    await toggleBoughtStatus(check)
+  }
+
+  async function toggleBoughtStatus(check) {
+    let apiUrl = `http://localhost:5000/api/shoppingItems/${props.id}`
+    axios
+      .put(apiUrl, {
+        item_id: props.id,
+        name: updatedShoppingItem.name,
+        amount: updatedShoppingItem.amount,
+        bought: check,
+      })
+      .then(() => props.getShoppingItems())
   }
 
   if (props.id === props.editableId) {
@@ -61,6 +77,7 @@ export default function ShoppingItem(props) {
           <input
             type="number"
             className="amount"
+            min="1"
             value={updatedShoppingItem.amount}
             onChange={handleItemChange}
             name="amount"
