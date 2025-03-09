@@ -10,7 +10,20 @@ export default function List(props) {
     amount: '1',
   })
   let [editableId, setEditableID] = useState('')
+  let [updatedShoppingItem, setUpdatedShoppingItem] = useState({
+    name: '',
+    amount: '',
+    bought: false,
+  })
 
+  // GET
+  function getShoppingItems() {
+    let apiUrl = 'http://localhost:5000/api/shoppingItems'
+    axios.get(apiUrl).then((response) => {
+      setItems(response.data)
+    })
+  }
+  // POST
   function handleSubmit(event) {
     event.preventDefault()
     let apiUrl = 'http://localhost:5000/api/shoppingItems'
@@ -20,13 +33,6 @@ export default function List(props) {
         amount: newShoppingItem.amount,
       })
       .then(getShoppingItems)
-  }
-
-  function getShoppingItems() {
-    let apiUrl = 'http://localhost:5000/api/shoppingItems'
-    axios.get(apiUrl).then((response) => {
-      setItems(response.data)
-    })
   }
 
   useEffect(() => {
@@ -43,8 +49,37 @@ export default function List(props) {
     })
   }
 
+  // PUT
   function setToEditMode(id) {
+    const itemToEdit = items.find((item) => item.item_id === id)
     setEditableID(id)
+    setUpdatedShoppingItem(itemToEdit)
+  }
+
+  function handleItemChange(event) {
+    if (event.target.value < 1) {
+      alert('Please enter amount')
+    }
+    setUpdatedShoppingItem({
+      ...updatedShoppingItem,
+      [event.target.name]: event.target.value,
+    })
+  }
+
+  // PUT - Tickbox
+  async function handleCheck(event) {
+    const check = event.target.checked
+    const id = event.target.id
+    await toggleBoughtStatus(check, id)
+  }
+
+  async function toggleBoughtStatus(check, id) {
+    let apiUrl = `http://localhost:5000/api/shoppingItems/${id}`
+    axios
+      .put(apiUrl, {
+        bought: check,
+      })
+      .then(() => getShoppingItems())
   }
 
   return (
@@ -81,6 +116,10 @@ export default function List(props) {
                 setToEditMode={setToEditMode}
                 editableId={editableId}
                 getShoppingItems={getShoppingItems}
+                updatedShoppingItem={updatedShoppingItem}
+                setUpdatedShoppingItem={setUpdatedShoppingItem}
+                handleItemChange={handleItemChange}
+                handleCheck={handleCheck}
               />
             </li>
           ))}
