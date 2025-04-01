@@ -26,17 +26,40 @@ export default function SignUpForm() {
   }
 
   return (
-    <div className="sign-up-form">
-      <form>
-        <label>User Name </label>
-        <input type="text" onChange={handleChange} name="userName" />
-        <label>E-Mail </label>
-        <input type="email" onChange={handleChange} name="email" />
+    <div className="sign-up">
+      <h2>Create a new account 🐳</h2>
+      <form className="sign-up-form">
+        <input
+          placeholder="User name"
+          type="text"
+          onChange={handleChange}
+          name="userName"
+        />
         <br />
-        <label>Password </label>
-        <input type="password" onChange={handleChange} name="password" />
-        <input type="submit" value="Register!" onClick={handleSubmit} />
+        <input
+          placeholder="E-Mail"
+          type="email"
+          onChange={handleChange}
+          name="email"
+        />
+        <br />
+        <input
+          placeholder="Password"
+          type="password"
+          onChange={handleChange}
+          name="password"
+        />
       </form>
+      <input
+        className="submit-button"
+        type="submit"
+        value="Register!"
+        onClick={handleSubmit}
+      />
+      <br />
+      <a href="">
+        <p>Already registered?</p>
+      </a>
     </div>
   )
 }

@@ -11,7 +11,7 @@ function App() {
 
       {/* <List /> */}
 
-      <Home />
+      {/* <Home /> */}
       <SignUpForm />
     </div>
   )
