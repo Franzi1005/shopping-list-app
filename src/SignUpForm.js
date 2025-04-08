@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useState } from 'react'
-import './signUpForm.css'
+import './home.css'
 
 export default function SignUpForm() {
   let [newUser, setNewUser] = useState({
@@ -26,7 +26,7 @@ export default function SignUpForm() {
   }
 
   return (
-    <div className="sign-up">
+    <div className="login-section">
       <h2>Create a new account 🐳</h2>
       <form className="sign-up-form">
         <input
@@ -53,7 +53,7 @@ export default function SignUpForm() {
       <input
         className="submit-button"
         type="submit"
-        value="Register!"
+        value="Register"
         onClick={handleSubmit}
       />
       <br />

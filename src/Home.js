@@ -1,23 +1,24 @@
 import React from 'react'
+import './home.css'
 
 export default function Home() {
   return (
     <div className="home">
       <h1>Welcome to the Shopping List app!</h1>
       <div className="login-section">
-        Login below
+        <h2>Login below🦐</h2>
         <form>
-          <label>E-Mail </label>
-          <input type="email" />
+          <input type="email" placeholder="E-Mail address" />
           <br />
-          <label>Password </label>
-          <input type="password" />
-          <input type="submit" value="Login" />
+          <input type="password" placeholder="Password" />
+          <br />
+          <input type="submit" value="Login" className="submit-button" />
         </form>
       </div>
-      <div className="sign-up-section ">
-        Or create your user below
-        <button>Sign Up!</button>
+      <div className="sign-up-form">
+        Or
+        <br />
+        <button className="submit-button">Create new account</button>
       </div>
     </div>
   )

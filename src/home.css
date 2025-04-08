@@ -1,24 +1,30 @@
-.sign-up {
+.home {
+  display: block;
+  margin: 0 auto;
   text-align: center;
-  padding: 20px 20px 40px;
-  margin: 30px;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.25);
-  max-width: 360px;
+  color: #232338;
 }
 
-.sign-up-form input {
+.login-section {
+  color: #232338;
+  text-align: center;
+  padding: 20px 20px 40px;
+  display: block;
+  margin: 30px auto;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.25);
+  max-width: 360px;
+  border-radius: 4px;
+}
+
+input {
   margin: 12px;
   padding: 6px 10px;
   border-radius: 4px;
-
   border: 1px solid rgb(163, 163, 163);
 }
 
-h2 {
-  color: rgb(35, 35, 35);
-}
-
 .submit-button {
+  color: #232338;
   background-color: #21b9fb;
   font-size: 16px;
   border-radius: 10px;
