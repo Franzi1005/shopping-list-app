@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import './home.css'
+import { Link } from 'react-router-dom'
 
 export default function SignUpForm() {
   let [newUser, setNewUser] = useState({
@@ -57,9 +58,9 @@ export default function SignUpForm() {
         onClick={handleSubmit}
       />
       <br />
-      <a href="">
-        <p>Already registered?</p>
-      </a>
+      <p>
+        <Link to="/">Already registered?</Link>
+      </p>
     </div>
   )
 }
