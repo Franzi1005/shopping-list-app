@@ -1,0 +1,8 @@
+.incomplete {
+  color: rgb(143, 0, 0);
+}
+
+.complete {
+  position: absolute;
+  left: -9999px;
+}

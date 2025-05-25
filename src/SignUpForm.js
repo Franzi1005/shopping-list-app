@@ -10,20 +10,45 @@ export default function SignUpForm() {
     password: '',
   })
 
+  let [success, setSuccess] = useState({
+    userName: true,
+    email: true,
+    password: true,
+  })
+
   function handleChange(event) {
     setNewUser({ ...newUser, [event.target.name]: event.target.value })
   }
 
   function handleSubmit(event) {
     event.preventDefault()
+
+    const fieldErrors = {
+      userName: newUser.userName.trim() !== '',
+      email: newUser.email.trim() !== '',
+      password: newUser.password.trim() !== '',
+    }
+
+    setSuccess(fieldErrors)
+
+    const isFormValid = Object.values(fieldErrors).every((val) => val === true)
+
+    if (!isFormValid) return
     let apiUrl = 'http://localhost:5000/api/users'
+
     axios
       .post(apiUrl, {
         userName: newUser.userName,
         email: newUser.email,
         password: newUser.password,
       })
-      .then(alert(`New user ${newUser.userName} created`))
+      .then(() => {
+        setSuccess(true)
+        alert(`New user ${newUser.userName} created`)
+      })
+      .catch(() => {
+        setSuccess(false)
+      })
   }
 
   return (
@@ -35,14 +60,22 @@ export default function SignUpForm() {
           type="text"
           onChange={handleChange}
           name="userName"
+          autoComplete="off"
         />
+        <p className={success.userName ? 'complete' : 'incomplete'}>
+          Please enter a user name
+        </p>
         <br />
         <input
           placeholder="E-Mail"
           type="email"
           onChange={handleChange}
           name="email"
+          autoComplete="off"
         />
+        <p className={success.email ? 'complete' : 'incomplete'}>
+          Please enter an email address
+        </p>
         <br />
         <input
           placeholder="Password"
@@ -51,6 +84,9 @@ export default function SignUpForm() {
           name="password"
         />
       </form>
+      <p className={success.password ? 'complete' : 'incomplete'}>
+        Please enter a password
+      </p>
       <input
         className="submit-button"
         type="submit"

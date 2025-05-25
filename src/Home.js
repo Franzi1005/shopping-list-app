@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './home.css'
 import axios from 'axios'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate, Link, data } from 'react-router-dom'
 
 export default function Home() {
   const navigate = useNavigate()
@@ -9,6 +9,7 @@ export default function Home() {
     email: '',
     password: '',
   })
+  let [success, setSuccess] = useState({ success: true })
 
   function handleChange(event) {
     setUser({ ...user, [event.target.name]: event.target.value })
@@ -17,9 +18,16 @@ export default function Home() {
   function handleSubmit(event) {
     event.preventDefault()
     let apiUrl = 'http://localhost:5000/api/auth'
+
     axios
       .post(apiUrl, { email: user.email, password: user.password })
-      .then(navigate('/shoppinglists'))
+      .then((data) => {
+        localStorage.setItem('x-auth-token', data.data)
+        navigate('/shoppinglists')
+      })
+      .catch(() => {
+        setSuccess(false)
+      })
   }
 
   return (
@@ -33,6 +41,8 @@ export default function Home() {
             placeholder="E-Mail address"
             onChange={handleChange}
             name="email"
+            required
+            autoComplete="off"
           />
           <br />
           <input
@@ -40,16 +50,19 @@ export default function Home() {
             placeholder="Password"
             onChange={handleChange}
             name="password"
+            required
           />
           <br />
-          <Link to="/personalSpace">
-            <input
-              type="submit"
-              value="Login"
-              className="submit-button"
-              onClick={handleSubmit}
-            />
-          </Link>
+
+          <p className={success ? 'invisible' : 'visible'}>
+            Incorrect password or username
+          </p>
+          <input
+            type="submit"
+            value="Login"
+            className="submit-button"
+            onClick={handleSubmit}
+          />
         </form>
       </div>
       <div className="sign-up-form">
