@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import ShoppingItem from './ShoppingItem'
-import './list.css'
+import '../../styles/list.css'
 
 export default function List(props) {
   let [items, setItems] = useState([])

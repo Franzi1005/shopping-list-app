@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import './home.css'
+import '../../styles/home.css'
 import axios from 'axios'
 import { useNavigate, Link } from 'react-router-dom'
 

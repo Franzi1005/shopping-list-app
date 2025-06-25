@@ -1,10 +1,10 @@
 import axios from 'axios'
 import React, { useState } from 'react'
-import './entryscreen.css'
-import CreateShopListModal from './Components/CreateShopListModal'
+import '../../styles/personalSpace.css'
+import CreateShopListModal from '../../Components/CreateShopListModal'
 import { useNavigate } from 'react-router-dom'
 
-export default function EntryScreen() {
+export default function PersonalSpace() {
   const navigate = useNavigate()
   let [shoppingLists, setShoppingLists] = useState([])
   let [shoppingListData, setShoppingListData] = useState({ ready: false })
@@ -49,6 +49,12 @@ export default function EntryScreen() {
             <li key={shoppingList.shopping_list_id}>
               <div className="shopping-list-card">
                 <h4>{shoppingList.sl_name}</h4>
+                <button>
+                  <i className="fa-regular fa-trash-can"></i>
+                </button>
+                <button>
+                  <i className="fa-solid fa-pen"></i>
+                </button>
               </div>
             </li>
           ))}

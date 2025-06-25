@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import './shoppingItem.css'
+import '../../styles/shoppingItem.css'
 
 export default function ShoppingItem(props) {
   function deleteShoppingItem() {
