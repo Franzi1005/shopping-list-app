@@ -2,8 +2,10 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import './entryscreen.css'
 import CreateShopListModal from './Components/CreateShopListModal'
+import { useNavigate } from 'react-router-dom'
 
 export default function EntryScreen() {
+  const navigate = useNavigate()
   let [shoppingLists, setShoppingLists] = useState([])
   let [shoppingListData, setShoppingListData] = useState({ ready: false })
 
@@ -21,6 +23,12 @@ export default function EntryScreen() {
       .then(() => {
         setShoppingListData({ ready: true })
       })
+  }
+
+  function handleLogout() {
+    alert('Logging out')
+    localStorage.removeItem('x-auth-token')
+    navigate('/')
   }
 
   if (shoppingListData.ready === true) {
@@ -46,21 +54,10 @@ export default function EntryScreen() {
           ))}
         </ul>
         <a href="">Edit User Details</a>
-        <button>Logout</button>
+        <button onClick={handleLogout}>Logout</button>
       </div>
     )
   } else {
     getShoppingLists()
-
-    // return (
-    //   <div className="entry-screen">
-    //     <h2>Welcome to your personal space!</h2>
-    //     <button>New shopping list</button>
-    //     <br />
-
-    //     <div>Looks like you have not created any shopping list yet🐧</div>
-    //     <a href="">Edit User Details</a>
-    //   </div>
-    // )
   }
 }
