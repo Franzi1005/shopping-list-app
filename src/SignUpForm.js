@@ -19,8 +19,11 @@ export default function SignUpForm() {
     password: true,
   })
 
+  let [errorMessage, setErrorMessage] = useState('')
+
   function handleChange(event) {
     setNewUser({ ...newUser, [event.target.name]: event.target.value })
+    setErrorMessage('')
   }
 
   function handleSubmit(event) {
@@ -45,12 +48,19 @@ export default function SignUpForm() {
         email: newUser.email,
         password: newUser.password,
       })
-      .then(() => {
+      .then((data) => {
         setSuccess(true)
-        alert(`New user ${newUser.userName} created`)
+        localStorage.setItem('x-auth-token', data.headers['x-auth-token'])
+        navigate('/shoppinglists')
       })
-      .catch(() => {
-        setSuccess(false)
+      .catch((error) => {
+        if (error.response) {
+          if (error.response.status === 409) {
+            setErrorMessage('This email is already registered.')
+          } else {
+            setErrorMessage(error.response.data)
+          }
+        }
       })
   }
 
@@ -90,6 +100,8 @@ export default function SignUpForm() {
       <p className={success.password ? 'complete' : 'incomplete'}>
         Please enter a password
       </p>
+
+      {errorMessage && <p className="incomplete">{errorMessage}</p>}
       <input
         className="submit-button"
         type="submit"
