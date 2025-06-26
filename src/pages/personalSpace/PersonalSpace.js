@@ -2,19 +2,19 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import '../../styles/personalSpace.css'
 import CreateShopListModal from '../../Components/CreateShopListModal'
+import ListItem from './ListItem'
 import { useNavigate } from 'react-router-dom'
 
 export default function PersonalSpace() {
   const navigate = useNavigate()
   let [shoppingLists, setShoppingLists] = useState([])
   let [shoppingListData, setShoppingListData] = useState({ ready: false })
-
-  let [openModal, setOpenModal] = useState(false)
+  let [isOpen, setIsOpen] = useState(false)
 
   const token = localStorage.getItem('x-auth-token')
 
   function getShoppingLists() {
-    let apiUrl = 'http://localhost:5000/api/shoppingLists'
+    let apiUrl = 'http://localhost:5000/api/shoppinglists'
     axios
       .get(apiUrl, { headers: { 'x-auth-token': token } })
       .then((response) => {
@@ -22,6 +22,20 @@ export default function PersonalSpace() {
       })
       .then(() => {
         setShoppingListData({ ready: true })
+      })
+  }
+
+  function createShoppingList(newShoppingListName) {
+    let apiUrl = 'http://localhost:5000/api/shoppinglists'
+    axios
+      .post(
+        apiUrl,
+        { name: newShoppingListName },
+        { headers: { 'x-auth-token': token } }
+      )
+      .then(() => setIsOpen(false))
+      .then(() => {
+        getShoppingLists()
       })
   }
 
@@ -35,26 +49,31 @@ export default function PersonalSpace() {
     return (
       <div className="entry-screen">
         <h2>Welcome to your personal space!</h2>
+        <p>Start by creating your first shopping list below🐥</p>
         <button
           onClick={() => {
-            setOpenModal(true)
+            setIsOpen(true)
           }}
         >
           New shopping list
         </button>
-        {openModal && <CreateShopListModal closeModal={setOpenModal} />}
+
+        <CreateShopListModal
+          open={isOpen}
+          onClose={() => setIsOpen(false)}
+          createShoppingList={createShoppingList}
+        />
+
         <br />
         <ul>
           {shoppingLists.map((shoppingList) => (
             <li key={shoppingList.shopping_list_id}>
               <div className="shopping-list-card">
-                <h4>{shoppingList.sl_name}</h4>
-                <button>
-                  <i className="fa-regular fa-trash-can"></i>
-                </button>
-                <button>
-                  <i className="fa-solid fa-pen"></i>
-                </button>
+                <ListItem
+                  name={shoppingList.sl_name}
+                  id={shoppingList.shopping_list_id}
+                  getShoppingLists={getShoppingLists}
+                />
               </div>
             </li>
           ))}

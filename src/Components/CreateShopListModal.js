@@ -1,26 +1,19 @@
 import React, { useState } from 'react'
 import './createShopListModal.css'
-import axios from 'axios'
 
-export default function CreateShopListModal({ closeModal }) {
+export default function CreateShopListModal({
+  open,
+  onClose,
+  createShoppingList,
+}) {
   let [newShoppingListName, setNewShoppingListName] = useState('')
-
-  const token = localStorage.getItem('x-auth-token')
-
-  function createShoppingList() {
-    let apiUrl = 'http://localhost:5000/api/shoppingLists'
-    axios.post(
-      apiUrl,
-      { name: newShoppingListName },
-      { headers: { 'x-auth-token': token } }
-    )
-  }
 
   function handleChange(e) {
     e.preventDefault()
     setNewShoppingListName(e.target.value)
   }
 
+  if (!open) return null
   return (
     <div className="modalBackground">
       <div className="create-shop-list-modal">
@@ -36,8 +29,10 @@ export default function CreateShopListModal({ closeModal }) {
           </form>
         </div>
         <div className="modal-footer">
-          <button onClick={() => closeModal(false)}>Cancel</button>
-          <button onClick={createShoppingList}>Create</button>
+          <button onClick={onClose}>Cancel</button>
+          <button onClick={() => createShoppingList(newShoppingListName)}>
+            Create
+          </button>
         </div>
       </div>
     </div>

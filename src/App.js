@@ -12,7 +12,7 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/createUser" element={<SignUpForm />} />
       <Route path="/shoppinglists" element={<PersonalSpace />} />
-      <Route path="/shoppingLists/:id" element={<List />} />
+      <Route path="/shoppinglists/:id" element={<List />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   )

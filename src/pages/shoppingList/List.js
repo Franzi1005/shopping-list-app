@@ -2,12 +2,17 @@ import axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import ShoppingItem from './ShoppingItem'
 import '../../styles/list.css'
+import { useParams } from 'react-router-dom'
 
 export default function List(props) {
+  const token = localStorage.getItem('x-auth-token')
+  const { id } = useParams()
+
   let [items, setItems] = useState([])
   let [newShoppingItem, setNewShoppingItem] = useState({
     name: '',
     amount: '1',
+    id: id,
   })
   let [editableId, setEditableID] = useState('')
   let [updatedShoppingItem, setUpdatedShoppingItem] = useState({
@@ -18,20 +23,27 @@ export default function List(props) {
 
   // GET
   function getShoppingItems() {
-    let apiUrl = 'http://localhost:5000/api/shoppingItems'
-    axios.get(apiUrl).then((response) => {
-      setItems(response.data)
-    })
+    let apiUrl = `http://localhost:5000/api/shoppingItems?shopping_list_id=${id}`
+    axios
+      .get(apiUrl, { headers: { 'x-auth-token': token } })
+      .then((response) => {
+        setItems(response.data)
+      })
   }
   // POST
   function handleSubmit(event) {
     event.preventDefault()
     let apiUrl = 'http://localhost:5000/api/shoppingItems'
     axios
-      .post(apiUrl, {
-        name: newShoppingItem.name,
-        amount: newShoppingItem.amount,
-      })
+      .post(
+        apiUrl,
+        {
+          name: newShoppingItem.name,
+          amount: newShoppingItem.amount,
+          shopping_list_id: id,
+        },
+        { headers: { 'x-auth-token': token } }
+      )
       .then(getShoppingItems)
   }
 
@@ -92,6 +104,7 @@ export default function List(props) {
             value={newShoppingItem.name}
             onChange={handleChange}
             name="name"
+            autoComplete="off"
           ></input>
           <input
             type="number"
