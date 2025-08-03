@@ -40,7 +40,7 @@ export default function SignUpForm() {
     const isFormValid = Object.values(fieldErrors).every((val) => val === true)
 
     if (!isFormValid) return
-    let apiUrl = 'http://localhost:5000/api/users'
+    let apiUrl = 'http://localhost:5001/api/users'
 
     axios
       .post(apiUrl, {

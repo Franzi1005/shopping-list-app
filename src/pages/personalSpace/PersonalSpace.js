@@ -14,7 +14,7 @@ export default function PersonalSpace() {
   const token = localStorage.getItem('x-auth-token')
 
   function getShoppingLists() {
-    let apiUrl = 'http://localhost:5000/api/shoppinglists'
+    let apiUrl = 'http://localhost:5001/api/shoppinglists'
     axios
       .get(apiUrl, { headers: { 'x-auth-token': token } })
       .then((response) => {
@@ -26,7 +26,7 @@ export default function PersonalSpace() {
   }
 
   function createShoppingList(newShoppingListName) {
-    let apiUrl = 'http://localhost:5000/api/shoppinglists'
+    let apiUrl = 'http://localhost:5001/api/shoppinglists'
     axios
       .post(
         apiUrl,

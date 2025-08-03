@@ -4,12 +4,12 @@ import '../../styles/shoppingItem.css'
 
 export default function ShoppingItem(props) {
   function deleteShoppingItem() {
-    let apiUrl = `http://localhost:5000/api/shoppingItems/${props.id}`
+    let apiUrl = `http://localhost:5001/api/shoppingItems/${props.id}`
     axios.delete(apiUrl).then(() => props.getShoppingItems())
   }
 
   function updateShoppingItem() {
-    let apiUrl = `http://localhost:5000/api/shoppingItems/${props.id}`
+    let apiUrl = `http://localhost:5001/api/shoppingItems/${props.id}`
     axios
       .put(apiUrl, {
         item_id: props.id,

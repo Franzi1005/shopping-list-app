@@ -23,7 +23,7 @@ export default function List(props) {
 
   // GET
   function getShoppingItems() {
-    let apiUrl = `http://localhost:5000/api/shoppingItems?shopping_list_id=${id}`
+    let apiUrl = `http://localhost:5001/api/shoppingItems?shopping_list_id=${id}`
     axios
       .get(apiUrl, { headers: { 'x-auth-token': token } })
       .then((response) => {
@@ -33,7 +33,7 @@ export default function List(props) {
   // POST
   function handleSubmit(event) {
     event.preventDefault()
-    let apiUrl = 'http://localhost:5000/api/shoppingItems'
+    let apiUrl = 'http://localhost:5001/api/shoppingItems'
     axios
       .post(
         apiUrl,
@@ -86,7 +86,7 @@ export default function List(props) {
   }
 
   async function toggleBoughtStatus(check, id) {
-    let apiUrl = `http://localhost:5000/api/shoppingItems/${id}`
+    let apiUrl = `http://localhost:5001/api/shoppingItems/${id}`
     axios
       .put(apiUrl, {
         bought: check,
