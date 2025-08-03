@@ -6,7 +6,7 @@ export default function ListItem(props) {
   const token = localStorage.getItem('x-auth-token')
   const navigate = useNavigate()
   function deleteShoppingList() {
-    let apiUrl = `http://localhost:5000/api/shoppinglists/${props.id}`
+    let apiUrl = `http://localhost:5001/api/shoppinglists/${props.id}`
     axios
       .delete(apiUrl, { headers: { 'x-auth-token': token } })
       .then(() => props.getShoppingLists())

@@ -17,7 +17,7 @@ export default function Home() {
 
   function handleSubmit(event) {
     event.preventDefault()
-    let apiUrl = 'http://localhost:5000/api/auth'
+    let apiUrl = 'http://localhost:5001/api/auth'
 
     axios
       .post(apiUrl, { email: user.email, password: user.password })
