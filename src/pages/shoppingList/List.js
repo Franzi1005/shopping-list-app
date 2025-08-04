@@ -23,7 +23,7 @@ export default function List(props) {
 
   // GET
   function getShoppingItems() {
-    let apiUrl = `http://localhost:5001/api/shoppingItems?shopping_list_id=${id}`
+    let apiUrl = `http://localhost:5001/api/shoppingLists/${id}/items`
     axios
       .get(apiUrl, { headers: { 'x-auth-token': token } })
       .then((response) => {
@@ -33,7 +33,7 @@ export default function List(props) {
   // POST
   function handleSubmit(event) {
     event.preventDefault()
-    let apiUrl = 'http://localhost:5001/api/shoppingItems'
+    let apiUrl = `http://localhost:5001/api/shoppingLists/${id}/items`
     axios
       .post(
         apiUrl,
@@ -85,12 +85,12 @@ export default function List(props) {
     await toggleBoughtStatus(check, id)
   }
 
-  async function toggleBoughtStatus(check, id) {
-    let apiUrl = `http://localhost:5001/api/shoppingItems/${id}`
+  async function toggleBoughtStatus(check, itemId) {
+    let apiUrl = `http://localhost:5001/api/shoppingLists/${id}/items/${itemId}`
     axios
       .put(apiUrl, {
         bought: check,
-      })
+      }, { headers: { 'x-auth-token': token } })
       .then(() => getShoppingItems())
   }
 
@@ -126,6 +126,7 @@ export default function List(props) {
                 id={item.item_id}
                 amount={item.amount}
                 bought={item.bought}
+                shopping_list_id={item.shopping_list_id}
                 setToEditMode={setToEditMode}
                 editableId={editableId}
                 getShoppingItems={getShoppingItems}

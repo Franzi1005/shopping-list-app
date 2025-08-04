@@ -3,20 +3,25 @@ import axios from 'axios'
 import '../../styles/shoppingItem.css'
 
 export default function ShoppingItem(props) {
+  const token = localStorage.getItem('x-auth-token')
+
   function deleteShoppingItem() {
-    let apiUrl = `http://localhost:5001/api/shoppingItems/${props.id}`
-    axios.delete(apiUrl).then(() => props.getShoppingItems())
+    let apiUrl = `http://localhost:5001/api/shoppingLists/${props.shopping_list_id}/items/${props.id}`
+    axios
+    .delete(apiUrl, { headers: {'x-auth-token': token }} )
+    .then(() => props.getShoppingItems())
   }
 
   function updateShoppingItem() {
-    let apiUrl = `http://localhost:5001/api/shoppingItems/${props.id}`
+    let apiUrl = `http://localhost:5001/api/shoppingLists/${props.shopping_list_id}/items/${props.id}`
     axios
       .put(apiUrl, {
         item_id: props.id,
         name: props.updatedShoppingItem.name,
         amount: props.updatedShoppingItem.amount,
         bought: props.updatedShoppingItem.bought,
-      })
+        shopping_list_id: props.updatedShoppingItem.shopping_list_id
+      }, { headers: {'x-auth-token': token }})
       .then(() => props.setToEditMode(null))
       .then(() => props.getShoppingItems()) // note for myself ()=> is needed to kind of delay the call, without htey are invoked immediately
   }
