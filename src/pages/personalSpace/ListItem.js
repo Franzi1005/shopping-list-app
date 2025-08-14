@@ -1,4 +1,4 @@
-import {useEffect, useParams} from 'react'
+import { useEffect, useParams } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
@@ -13,8 +13,9 @@ export default function ListItem(props) {
   }
 
   function editShoppingList() {
-    axios.get(apiUrl, { headers: { 'x-auth-token': token } })
-    .then(()=>{navigate(`/shoppinglists/${props.id}`)})
+    axios.get(apiUrl, { headers: { 'x-auth-token': token } }).then(() => {
+      navigate(`/shoppinglists/${props.id}`)
+    })
   }
 
   return (
