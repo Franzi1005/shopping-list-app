@@ -3,8 +3,10 @@ import React, { useState, useEffect } from 'react'
 import ShoppingItem from './ShoppingItem'
 import '../../styles/list.css'
 import { useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 export default function List(props) {
+  const navigate = useNavigate()
   const token = localStorage.getItem('x-auth-token')
   const { id } = useParams()
 
@@ -21,6 +23,8 @@ export default function List(props) {
     bought: false,
   })
 
+  let [accessGranted, setAccessGranted] = useState(true)
+
   // GET
   function getShoppingItems() {
     let apiUrl = `http://localhost:5001/api/shoppingLists/${id}/items`
@@ -29,6 +33,11 @@ export default function List(props) {
       .then((response) => {
         setItems(response.data)
       })
+  }
+
+  function getShoppingList() {
+    let apiUrl = `http://localhost:5001/api/shoppingLists/${id}`
+    axios.get(apiUrl, { headers: { 'x-auth-token': token } }).then(()=>{getShoppingItems()}).catch(()=>setAccessGranted(false))
   }
   // POST
   function handleSubmit(event) {
@@ -48,7 +57,7 @@ export default function List(props) {
   }
 
   useEffect(() => {
-    getShoppingItems()
+    getShoppingList()
   }, [])
 
   function handleChange(event) {
@@ -94,6 +103,13 @@ export default function List(props) {
       .then(() => getShoppingItems())
   }
 
+  function handleLogout() {
+    alert('Logging out')
+    localStorage.removeItem('x-auth-token')
+    navigate('/')
+  }
+
+  if (accessGranted){
   return (
     <div className="listWrapper">
       <div className="list">
@@ -138,7 +154,11 @@ export default function List(props) {
             </li>
           ))}
         </ul>
+        <button onClick={()=> navigate('/shoppingLists')}>Home</button>
+        <button onClick={handleLogout}>Logout</button>
       </div>
     </div>
-  )
+  )} else {
+    return (<h1>List not found!🦆💀</h1>)
+  }
 }

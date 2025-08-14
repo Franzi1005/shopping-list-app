@@ -49,7 +49,7 @@ export default function PersonalSpace() {
     return (
       <div className="entry-screen">
         <h2>Welcome to your personal space!</h2>
-        <p>Start by creating your first shopping list below🐥</p>
+        <h4>Start by creating your first shopping list below🐥</h4>
         <button
           onClick={() => {
             setIsOpen(true)
