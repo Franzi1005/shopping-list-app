@@ -1,19 +1,20 @@
-import React from 'react'
+import {useEffect, useParams} from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
 export default function ListItem(props) {
   const token = localStorage.getItem('x-auth-token')
   const navigate = useNavigate()
+  let apiUrl = `http://localhost:5001/api/shoppinglists/${props.id}`
   function deleteShoppingList() {
-    let apiUrl = `http://localhost:5001/api/shoppinglists/${props.id}`
     axios
       .delete(apiUrl, { headers: { 'x-auth-token': token } })
       .then(() => props.getShoppingLists())
   }
 
   function editShoppingList() {
-    navigate(`/shoppinglists/${props.id}`)
+    axios.get(apiUrl, { headers: { 'x-auth-token': token } })
+    .then(()=>{navigate(`/shoppinglists/${props.id}`)})
   }
 
   return (
